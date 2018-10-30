@@ -15,7 +15,7 @@ def put(name_database,name_table):
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="",
+        passwd="okmijnuhb",
         database=name_database
     )
     mycursor = mydb.cursor()
