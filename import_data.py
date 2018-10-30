@@ -6,17 +6,16 @@ def import_data_(name_database,name_table,file_data):
     mydb = mysql.connector.connect(
         host="localhost",
         user="root",
-        passwd="",
+        passwd="okmijnuhb",
         database=name_database
     )
     mycursor = mydb.cursor()
     q = []
     a = ""
     for x in range(3,len(data)):
-        if x%5 == 0:
+        if x%3 == 0:
             a=data[x]
-            q=data[x-4:x-1]
-            # sql="INSERT INTO "+name_table+" (question,answer) VALUES (" + q[0]+","+a+")"
+            q=data[x-2:x-1]
             sql = "INSERT INTO qa (question,answer) VALUES (%s, %s)"
             val = (" ".join(q), a)
             mycursor.execute(sql, val)
