@@ -19,5 +19,5 @@ class Post(Resource):
 
 api.add_resource(Post,'/QA')
 if __name__ =="__main__":
-    # app.run()
-    app.run(host='0.0.0.0')
+    app.run()
+    # app.run(host='0.0.0.0')
