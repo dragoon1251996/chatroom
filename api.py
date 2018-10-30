@@ -9,6 +9,7 @@ api=Api(app)
 
 class Post(Resource):
     def get(self):
+        print({"out": es.search(index="bot1", body={"query": {"match": {'question': "ukm"}}})})
         return "1251996"
     def put(self):
         return "vuong"
