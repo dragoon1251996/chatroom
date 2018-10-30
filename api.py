@@ -9,7 +9,6 @@ api=Api(app)
 
 class Post(Resource):
     def get(self):
-        print({"out": es.search(index="bot1", body={"query": {"match": {'question': "ukm"}}})})
         return "1251996"
     def put(self):
         return "vuong"
@@ -18,6 +17,7 @@ class Post(Resource):
         return {"out": es.search(index="bot1", body={"query": {"match": {'question': test}}})}
 
 api.add_resource(Post,'/QA')
+
 if __name__ =="__main__":
     app.run()
     # app.run(host='0.0.0.0')
