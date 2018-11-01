@@ -22,6 +22,6 @@ def import_data_(name_database,name_table,file_data):
 
 if __name__ == '__main__':
     # import_data_(sys.argv[1],sys.argv[2],sys.argv[3])
-    import_data_("chatbot01","qa","qa.txt")
+    import_data_("chatbot01","qa","chatroom/qa.txt")
 
 
