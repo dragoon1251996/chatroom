@@ -19,6 +19,8 @@ def import_data_(name_database,name_table,file_data):
             sql = "INSERT INTO "+name_table+" (question,answer) VALUES (%s, %s)"
             val = (" ".join(q), a)
             mycursor.execute(sql, val)
+    mydb.commit()
+
 
 if __name__ == '__main__':
     # import_data_(sys.argv[1],sys.argv[2],sys.argv[3])
