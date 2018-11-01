@@ -18,5 +18,4 @@ def put(name_database,name_table):
     # print(a)
 
 if __name__ == '__main__':
-    put("b1","qa")
-    put("bot1","qa")
+    put("cahtbot01","qa")
