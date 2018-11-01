@@ -2,6 +2,7 @@ from flask import Flask,request
 from flask_restful import Resource,Api
 import json
 from elasticsearch import Elasticsearch
+from configText import  convert
 
 es = Elasticsearch([{'host': 'localhost', 'post': '9200'}])
 app=Flask(__name__)
@@ -13,8 +14,10 @@ class Post(Resource):
     def put(self):
         return "vuong"
     def post(self):
-        test = dict(request.form)["question"][0]
-        return {"out": es.search(index="bot1", body={"query": {"match": {'question': test}}})}
+        chatbot_name=list(dict(request.form).keys())[0]
+        print(chatbot_name)
+        test = dict(request.form)[chatbot_name][0]
+        return {"out": es.search(index=chatbot_name, body={"query": {"match": {'question': convert(test)}}})}
 
 api.add_resource(Post,'/QA')
 

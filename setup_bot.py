@@ -26,5 +26,7 @@ def CreatTableBot(name_database,name_table):
 
 
 if __name__ == '__main__':
-    CreaateDataBaseBot(sys.argv[1])
-    CreatTableBot(sys.argv[1],sys.argv[2])
+    # CreaateDataBaseBot(sys.argv[1])
+    # CreatTableBot(sys.argv[1],sys.argv[2])
+    CreaateDataBaseBot("chatbot01")
+    CreatTableBot("chatbot01", "qa")

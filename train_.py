@@ -27,7 +27,7 @@ def put(name_database,name_table):
         temp = {}
         d = list(i)
         temp["id"] = i[0]
-        temp["question"] = i[1]
+        temp["question"] = convert(i[1])
         temp["answer"] = i[2]
         out.append(temp)
     res = requests.get("http://localhost:9200/")
@@ -38,4 +38,5 @@ def put(name_database,name_table):
     print(a)
 
 if __name__ == '__main__':
-    put(sys.argv[1],sys.argv[2])
+    # put(sys.argv[1],sys.argv[2])
+    put("chatbot01","qa")
