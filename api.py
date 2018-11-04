@@ -17,7 +17,7 @@ class Post(Resource):
         chatbot_name=list(dict(request.form).keys())[0]
         print(chatbot_name)
         test = dict(request.form)[chatbot_name][0]
-        return {"out": es.search(index=chatbot_name, body={"query": {"match": {'question': convert(test)}}})}
+        return {"answer": [x["_source"]["answer"] for x in es.search(index=chatbot_name, body={"query": {"match": {'question': convert(test)}}})["hits"]["hits"]]}
 
 api.add_resource(Post,'/QA')
 
