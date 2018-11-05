@@ -38,5 +38,5 @@ def put(name_database,name_table):
     print(a)
 
 if __name__ == '__main__':
-    # put(sys.argv[1],sys.argv[2])
-    put("chatbot01","qa")
+    put(sys.argv[1],sys.argv[2])
+    # put("chatbot01","qa")
