@@ -25,12 +25,12 @@ class Post(Resource):
             chatbot_name=list(dict(request.form).keys())[0]
             # print(chatbot_name)
             test = dict(request.form)[chatbot_name][0]
-            return {"answer": [x["_source"]["answer"] for x in es.search(index="chatbot01", body={"query": {"match": {'question': "vkl nhe"}}})["hits"]["hits"]]}
+            return {"answer": [x["_source"]["answer"] for x in es.search(index="chatbot01", body={"query": {"match": {'question': test}}})["hits"]["hits"]]}
         except Exception as e:
             try:
                 return dict(request.form)
             except:
-                return str(request.form)
+                return str(request.form)+"zzz"
 api.add_resource(Post,'/QA')
 
 if __name__ =="__main__":
