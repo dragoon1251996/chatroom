@@ -3,6 +3,7 @@ from flask_restful import Resource,Api
 import json
 from elasticsearch import Elasticsearch
 from configText import  convert
+import random
 
 es = Elasticsearch([{'host': 'localhost', 'post': '9200'}])
 app=Flask(__name__)
@@ -25,12 +26,15 @@ class Post(Resource):
             chatbot_name=list(dict(request.form).keys())[0]
             # print(chatbot_name)
             test = dict(request.form)[chatbot_name][0]
-            return {"answer": [x["_source"]["answer"] for x in es.search(index="chatbot01", body={"query": {"match": {'question': test}}})["hits"]["hits"]]}
+            data= [x["_source"]["answer"] for x in es.search(index="chatbot01", body={"query": {"match": {'question': convert(test)}}})["hits"]["hits"]]
+            if len(data)!=0:
+                return {"answer":[random.choice(data)]}
+            else:
+                size = es.search(index="chatbot01", body={"fields": ["id"], "query": {"match_all": {}}})["hits"]["total"]
+                return {"answer":random.choice([x["fields"]["answer"] for x in es.search(index="chatbot01", body={"fields": ["answer"], "query": {"match_all": {}}},size=size)["hits"]["hits"]])}
         except Exception as e:
-            try:
-                return dict(request.form)
-            except:
-                return str(request.form)+"zzz"
+            return []
+
 api.add_resource(Post,'/QA')
 
 if __name__ =="__main__":
