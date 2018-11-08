@@ -28,10 +28,10 @@ class Post(Resource):
             test = dict(request.form)[chatbot_name][0]
             data= [x["_source"]["answer"] for x in es.search(index="chatbot01", body={"query": {"match": {'question': convert(test)}}})["hits"]["hits"]]
             if len(data)!=0:
-                return {"answer":[random.choice(data)]}
+                return {"answer":data}
             else:
                 size = es.search(index="chatbot01", body={"fields": ["id"], "query": {"match_all": {}}})["hits"]["total"]
-                return {"answer":random.choice([x["fields"]["answer"] for x in es.search(index="chatbot01", body={"fields": ["answer"], "query": {"match_all": {}}},size=size)["hits"]["hits"]])}
+                return {"answer":random.sample([x["fields"]["answer"][0] for x in es.search(index="chatbot01", body={"fields": ["answer"], "query": {"match_all": {}}},size=size)["hits"]["hits"]],10)}
         except Exception as e:
             return []
 
