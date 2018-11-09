@@ -26,12 +26,22 @@ class Post(Resource):
             chatbot_name=list(dict(request.form).keys())[0]
             # print(chatbot_name)
             test = dict(request.form)[chatbot_name][0]
-            data= [x["_source"]["answer"] for x in es.search(index="chatbot01", body={"query": {"match": {'question': convert(test)}}})["hits"]["hits"]]
-            if len(data)!=0:
-                return {"answer":data}
+            if(chatbot_name=="chanle"):
+                data= [x["_source"]["answer"].replace("tài","Tài").replace("xỉu","Xỉu").replace("Xiu","Xỉu").replace("Tai","Tài").replace("tai","Tài").replace("xiu","Xỉu").replace("Tài","chẵn").replace("Xỉu","lẻ") for x in es.search(index="chatbot01", body={"query": {"match": {'question': convert(test)}}})["hits"]["hits"]]
+                if len(data)!=0 and random.randint(0,2)!=1:
+                    return {"answer":data}
+                else:
+                    size = es.search(index="chatbot01", body={"fields": ["id"], "query": {"match_all": {}}})["hits"]["total"]
+                    return {"answer":random.sample([x["fields"]["answer"][0].replace("tài","Tài").replace("xỉu","Xỉu").replace("Xiu","Xỉu").replace("Tai","Tài").replace("tai","Tài").replace("xiu","Xỉu").replace("Tài","chẵn").replace("Xỉu","lẻ") for x in es.search(index="chatbot01", body={"fields": ["answer"], "query": {"match_all": {}}},size=size)["hits"]["hits"]],10)}
             else:
-                size = es.search(index="chatbot01", body={"fields": ["id"], "query": {"match_all": {}}})["hits"]["total"]
-                return {"answer":random.sample([x["fields"]["answer"][0] for x in es.search(index="chatbot01", body={"fields": ["answer"], "query": {"match_all": {}}},size=size)["hits"]["hits"]],10)}
+                data = [x["_source"]["answer"] for x in es.search(index="chatbot01", body={"query": {"match": {'question': convert(test)}}})["hits"]["hits"]]
+                if len(data) != 0 and random.randint(0, 2) != 1:
+                    return {"answer": data}
+                else:
+                    size = es.search(index="chatbot01", body={"fields": ["id"], "query": {"match_all": {}}})["hits"]["total"]
+                    return {"answer": random.sample([x["fields"]["answer"][0] for x in es.search(index="chatbot01",body={"fields": ["answer"], "query": {"match_all": {}}},size=size)["hits"]["hits"]], 10)}
+
+
         except Exception as e:
             return []
 
